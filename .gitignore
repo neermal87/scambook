@@ -3,7 +3,7 @@ node_modules/
 *.log
 .DS_Store
 # Keep folder structure; ignore uploaded binaries
-assets/uploads/profiles/*
-assets/uploads/posts/*
-!assets/uploads/profiles/.gitkeep
-!assets/uploads/posts/.gitkeep
+backend/assets/uploads/profiles/*
+backend/assets/uploads/posts/*
+!backend/assets/uploads/profiles/.gitkeep
+!backend/assets/uploads/posts/.gitkeep

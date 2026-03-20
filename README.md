@@ -1,25 +1,17 @@
 # ScamBook — Community Scam Sharing Platform
 
-Production-style full-stack social feed: **Node.js + Express**, **MySQL** (AWS RDS–compatible), **Bootstrap 5** frontend with a Facebook-inspired layout. Images are stored under `assets/uploads/` (structured so you can switch to **Amazon S3** later by uploading there and saving the HTTPS URL in `profile_image` / `image_url`).
+Production-style full-stack social feed: **Node.js + Express**, **MySQL** (AWS RDS–compatible), **Bootstrap 5** frontend with a Facebook-inspired layout. Images are stored under `backend/assets/uploads/` (structured so you can switch to **Amazon S3** later by uploading there and saving the HTTPS URL in `profile_image` / `image_url`).
 
 ## Project layout
 
 ```
-ScamAlert/
-├── backend/server.js       # App entry
-├── config/                 # DB pool, multer
-├── controllers/
-├── middleware/
-├── models/
-├── routes/
+ScamBook/
+├── backend/                # Express app (server.js + config/controllers/models/routes)
 ├── frontend/               # HTML pages
-├── assets/
-│   ├── css/
-│   ├── js/
-│   └── uploads/            # profiles/, posts/ (gitignored files)
 ├── database/schema.sql
 ├── package.json
-└── .env                    # create from .env.example
+├── package-lock.json
+└── README.md
 ```
 
 ## API endpoints
