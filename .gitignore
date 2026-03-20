@@ -1,0 +1,9 @@
+node_modules/
+.env
+*.log
+.DS_Store
+# Keep folder structure; ignore uploaded binaries
+assets/uploads/profiles/*
+assets/uploads/posts/*
+!assets/uploads/profiles/.gitkeep
+!assets/uploads/posts/.gitkeep

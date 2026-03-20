@@ -1,0 +1,318 @@
+/**
+ * ScamBook — Facebook-inspired layout, modern spacing & shadows
+ */
+:root {
+  --fb-blue: #1877f2;
+  --fb-blue-hover: #166fe5;
+  --bg-page: #f0f2f5;
+  --bg-card: #ffffff;
+  --text-primary: #050505;
+  --text-secondary: #65676b;
+  --border-light: #e4e6eb;
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --radius: 12px;
+  --nav-height: 56px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+/* Top navbar */
+.scam-nav {
+  height: var(--nav-height);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-card);
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+}
+
+.scam-nav .navbar-brand {
+  font-weight: 700;
+  font-size: 1.35rem;
+  color: var(--fb-blue) !important;
+  letter-spacing: -0.02em;
+}
+
+.scam-nav .search-wrap {
+  max-width: 240px;
+}
+
+.scam-nav .search-wrap input {
+  background: var(--bg-page);
+  border: none;
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
+
+.scam-nav .search-wrap input:focus {
+  outline: 2px solid var(--fb-blue);
+  outline-offset: 0;
+}
+
+.scam-nav .icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  border: none;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.scam-nav .icon-btn:hover {
+  background: var(--border-light);
+  transform: scale(1.02);
+}
+
+.avatar-sm {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--border-light);
+}
+
+.avatar-xs {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--border-light);
+}
+
+.avatar-lg {
+  width: 168px;
+  height: 168px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--bg-card);
+  box-shadow: var(--shadow-card);
+  background: var(--border-light);
+}
+
+/* Layout columns */
+.layout-main {
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+.sidebar-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  padding: 0.75rem 0;
+  position: sticky;
+  top: calc(var(--nav-height) + 1rem);
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 1rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  border-radius: 8px;
+  margin: 0 0.5rem;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+
+.sidebar-link:hover,
+.sidebar-link.active {
+  background: var(--bg-page);
+  color: var(--text-primary);
+}
+
+.sidebar-link i {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--bg-page);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fb-blue);
+}
+
+/* Post composer & cards */
+.composer-card,
+.post-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  border: none;
+  transition: box-shadow 0.2s;
+}
+
+.post-card:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+.composer-card .form-control,
+.post-card textarea {
+  background: var(--bg-page);
+  border: none;
+  border-radius: 8px;
+}
+
+.composer-card .form-control:focus,
+.post-card textarea:focus {
+  box-shadow: 0 0 0 2px rgba(24, 119, 242, 0.25);
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.post-meta {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.post-image {
+  width: 100%;
+  border-radius: 8px;
+  max-height: 480px;
+  object-fit: cover;
+}
+
+.post-actions {
+  border-top: 1px solid var(--border-light);
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.post-actions button {
+  color: var(--text-secondary);
+  font-weight: 600;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  padding: 0.35rem 0.75rem;
+  transition: background 0.15s;
+}
+
+.post-actions button:hover {
+  background: var(--bg-page);
+}
+
+.post-actions button.liked {
+  color: var(--fb-blue);
+}
+
+.comment-row {
+  font-size: 0.9rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.comment-row:last-child {
+  border-bottom: none;
+}
+
+/* Right sidebar widgets */
+.widget-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.widget-card h6 {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+}
+
+.trend-item {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 0.9rem;
+}
+
+.trend-item:last-child {
+  border-bottom: none;
+}
+
+.alert-pill {
+  font-size: 0.8rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 8px;
+  background: #fff3cd;
+  color: #856404;
+  margin-bottom: 0.5rem;
+}
+
+/* Auth pages */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e7f0ff 0%, #f0f2f5 50%, #ffffff 100%);
+}
+
+.auth-card {
+  max-width: 420px;
+  width: 100%;
+  border-radius: var(--radius);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: none;
+}
+
+.btn-fb-primary {
+  background: var(--fb-blue);
+  border: none;
+  font-weight: 600;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+}
+
+.btn-fb-primary:hover {
+  background: var(--fb-blue-hover);
+}
+
+/* Profile page */
+.profile-cover {
+  height: 200px;
+  background: linear-gradient(90deg, #1877f2, #42b72a);
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+
+.profile-avatar-wrap {
+  margin-top: -84px;
+  padding-left: 1.5rem;
+}
+
+/* Utilities */
+.text-fb {
+  color: var(--fb-blue) !important;
+}
+
+@media (max-width: 991.98px) {
+  .sidebar-card {
+    position: static;
+  }
+
+  .scam-nav .search-wrap {
+    max-width: 140px;
+  }
+}
