@@ -38,7 +38,9 @@ async function createPost(req, res) {
 
     const postId = await postModel.createPost({
       userId,
-      content: text || null,
+      // `posts.content` is NOT NULL in the deployment-guide schema.
+      // For image-only posts, store an empty string.
+      content: text,
       imageUrl: imageUrl || null,
     });
 

@@ -8,6 +8,7 @@ function sanitizeUser(row) {
   if (!row) return null;
   return {
     id: row.id,
+    username: row.username,
     name: row.name,
     email: row.email,
     profile_image: row.profile_image,
@@ -29,7 +30,7 @@ function signToken(user) {
  */
 async function register(req, res) {
   try {
-    const { name, email, password } = req.body;
+    const { name, username, email, password } = req.body;
 
     if (!name || typeof name !== 'string' || name.trim().length < 2 || name.trim().length > 255) {
       return res.status(400).json({
@@ -37,6 +38,7 @@ async function register(req, res) {
         message: 'Name must be between 2 and 255 characters',
       });
     }
+    const displayName = name.trim();
     if (!email || typeof email !== 'string' || !EMAIL_RE.test(email.trim())) {
       return res.status(400).json({ success: false, message: 'Valid email is required' });
     }
@@ -47,14 +49,35 @@ async function register(req, res) {
       });
     }
 
+    const slugBase = (() => {
+      // Generate a safe username from display name if caller didn't provide one.
+      // This helps prevent EC2 insert failures when `users.username` is NOT NULL.
+      const raw = (username && typeof username === 'string' ? username : displayName).trim().toLowerCase();
+      const cleaned = raw.replace(/[^a-z0-9_]+/g, '_').replace(/^_+|_+$/g, '');
+      const base = cleaned || 'user';
+      return base.length > 30 ? base.slice(0, 30) : base;
+    })();
+
     const existing = await userModel.findUserByEmail(email);
     if (existing) {
       return res.status(409).json({ success: false, message: 'Email already registered' });
     }
 
+    // Ensure username is unique for the NOT NULL + UNIQUE constraint.
+    let finalUsername = slugBase;
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+      const u = await userModel.findUserByUsername(finalUsername);
+      if (!u) break;
+      const suffix = Math.floor(Math.random() * 9000) + 1000;
+      finalUsername = `${slugBase}_${suffix}`;
+      if (finalUsername.length > 50) finalUsername = finalUsername.slice(0, 50);
+    }
+
     const passwordHash = await bcrypt.hash(password, 12);
     const userId = await userModel.createUser({
-      name: name.trim(),
+      username: finalUsername,
+      name: displayName,
       email: email.trim(),
       passwordHash,
     });

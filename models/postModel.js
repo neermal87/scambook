@@ -6,7 +6,7 @@ const pool = require('../config/db');
 async function createPost({ userId, content, imageUrl }) {
   const [result] = await pool.execute(
     'INSERT INTO posts (user_id, content, image_url) VALUES (?, ?, ?)',
-    [userId, content || null, imageUrl || null]
+    [userId, content ?? '', imageUrl || null]
   );
   return result.insertId;
 }

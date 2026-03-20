@@ -3,17 +3,23 @@ const pool = require('../config/db');
 /**
  * User data access — maps to `users` table
  */
-async function createUser({ name, email, passwordHash, profileImage = null }) {
+async function createUser({ username, name, email, passwordHash, profileImage = null }) {
   const [result] = await pool.execute(
-    'INSERT INTO users (name, email, password, profile_image) VALUES (?, ?, ?, ?)',
-    [name.trim(), email.trim().toLowerCase(), passwordHash, profileImage]
+    'INSERT INTO users (username, name, email, password, profile_image) VALUES (?, ?, ?, ?, ?)',
+    [
+      username.trim(),
+      name.trim(),
+      email.trim().toLowerCase(),
+      passwordHash,
+      profileImage,
+    ]
   );
   return result.insertId;
 }
 
 async function findUserByEmail(email) {
   const [rows] = await pool.execute(
-    'SELECT id, name, email, password, profile_image, created_at FROM users WHERE email = ? LIMIT 1',
+    'SELECT id, username, name, email, password, profile_image, created_at FROM users WHERE email = ? LIMIT 1',
     [email.trim().toLowerCase()]
   );
   return rows[0] || null;
@@ -21,8 +27,16 @@ async function findUserByEmail(email) {
 
 async function findUserById(id) {
   const [rows] = await pool.execute(
-    'SELECT id, name, email, profile_image, created_at FROM users WHERE id = ? LIMIT 1',
+    'SELECT id, username, name, email, profile_image, created_at FROM users WHERE id = ? LIMIT 1',
     [id]
+  );
+  return rows[0] || null;
+}
+
+async function findUserByUsername(username) {
+  const [rows] = await pool.execute(
+    'SELECT id, username FROM users WHERE username = ? LIMIT 1',
+    [username.trim()]
   );
   return rows[0] || null;
 }
@@ -43,5 +57,6 @@ module.exports = {
   createUser,
   findUserByEmail,
   findUserById,
+  findUserByUsername,
   updateUserProfile,
 };
